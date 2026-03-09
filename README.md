@@ -1,11 +1,21 @@
 # asset-allocater-mvp
 
 # 技術構成
-- Client: JavaScript, React, React Router(仮), Mantine（仮）
-- Server: Go, Fiber
+- Client: JavaScript
+    - React
+    - React Router(仮)
+    - Mantine（仮） 
+- Server: Go
+    - Gin
+    - Air（ホットリロード）
+    - godotenv（.env）
+    - pgx（postgresドライバ）
 - Calc Engine: Julia, Oxygen.jl 
+    - 
 - DB: PostgreSQL 
+    - 
 - Infra: Render
+    - 
 
 # ゴール関連
 ## ゴール
@@ -33,10 +43,10 @@
 
 # 工数管理
 ## Day1
-1. ローカル環境設定
+1. ローカル環境設定✅
 1. 疎通確認
-    1. client起動
-    1. 
+    1. client起動✅
+    1. server起動✅
 
 
 
@@ -54,9 +64,12 @@
 1. Gin（フルスタック）やFiber（BE）が一般的、今回はExpress(JS)と比較しやすいFiberを検討
 1. IDE: VSCode
 1. デバッガ: VSCodeの拡張？
+
 ### 参考記事
 1. [HelloWorld](https://qiita.com/rapirapi/items/a1a770c044d72328a34e)
 1. Helloworld, 38-go-test
+1. [Gin公式 QuickStart](https://gin-gonic.com/en/docs/quickstart/?utm_source=chatgpt.com)
+1. [フレームワーク概要](https://geechs-job.com/tips/details/142)
 
 ## Julia
 日本語記事少ないわ、、、、
