@@ -6,11 +6,12 @@
     - React Router(仮)
     - Mantine（仮） 
 - Server: Go
-    - Gin
+    - [Gin](https://gin-gonic.com/en/docs/introduction/)
     - Air（ホットリロード）
     - godotenv（.env）
     - pgx（postgresドライバ）
-- Calc Engine: Julia, Oxygen.jl 
+- Calc Engine: Julia
+    - Oxygen.jl 
     - 
 - DB: PostgreSQL 
     - 
@@ -32,7 +33,6 @@
 ### Calc-Engine: Juliaで計算エンジンを作る
     - BEからのリクエストを受け取る（JSON） 
     - BEにレスポンスを返す（JSON）
-### 
 
 ## NiceToHave
 - chart形式
@@ -43,6 +43,7 @@
 
 # 工数管理
 ## Day1
+1. 調べ物（学習関連にまとめた）✅
 1. ローカル環境設定✅
 1. 疎通確認
     1. client起動✅
