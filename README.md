@@ -71,10 +71,10 @@
 1. デバッガ: VSCodeの拡張？
 
 ### 参考記事
-1. [HelloWorld](https://qiita.com/rapirapi/items/a1a770c044d72328a34e)
+1. [Webサイト / HelloWorld](https://qiita.com/rapirapi/items/a1a770c044d72328a34e)
 1. Helloworld, 38-go-test
-1. [Gin公式 QuickStart](https://gin-gonic.com/en/docs/quickstart/?utm_source=chatgpt.com)
-1. [フレームワーク概要](https://geechs-job.com/tips/details/142)
+1. [公式 / QuickStart](https://gin-gonic.com/en/docs/quickstart/?utm_source=chatgpt.com)
+1. [Webサイト / フレームワーク概要](https://geechs-job.com/tips/details/142)
 
 ## Julia
 日本語記事少ないわ、、、、
@@ -84,10 +84,11 @@
 
 
 ### 参考記事
-1. [HelloWorld](https://qiita.com/niwasawa/items/09d1058ecfda1649bfe5)
+1. [Webサイト / HelloWorld](https://qiita.com/niwasawa/items/09d1058ecfda1649bfe5)
 1. Helloworld, 38-julia-test
-1. [簡単操作系](https://qiita.com/SatoshiTerasaki/items/a7646618cab8a4811d91?utm_source=chatgpt.com)
-1. [株価シミュレーション](https://qiita.com/ismkt/items/210dee5cd6109e7c2ee9)
+1. [YouTube / Julia導入](https://www.youtube.com/watch?v=vMWlppfkW08)
+1. [Webサイト / 簡単操作系](https://qiita.com/SatoshiTerasaki/items/a7646618cab8a4811d91?utm_source=chatgpt.com)
+1. [Webサイト / 株価シミュレーション](https://qiita.com/ismkt/items/210dee5cd6109e7c2ee9)
 
 ## JS
 
