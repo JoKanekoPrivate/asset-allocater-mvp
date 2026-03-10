@@ -5,7 +5,7 @@ using DotEnv
 # 環境変数の読み込み
 DotEnv.config(".env.local")
 
-# ヘルスチェック
+# テスト用エンドポイント
 @get "/test" function()
   return Dict(
     "status" => "ok",
@@ -13,7 +13,7 @@ DotEnv.config(".env.local")
   )
 end
 
-# ダミー計算エンドポイント
+# ダミー計算用エンドポイント
 @post "/calc/evaluate" function(req)
   # リクエストボディの読み取り
   body = JSON3.read(req.body)

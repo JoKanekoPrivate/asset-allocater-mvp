@@ -14,9 +14,9 @@
     - Oxygen.jl 
     - 
 - DB: PostgreSQL 
-    - 
+    - **
 - Infra: Render
-    - 
+    - **
 
 # ゴール関連
 ## ゴール
@@ -51,6 +51,12 @@
     1. client-server接続✅
 
 ## Day2
+1. 調べ物（学習関連にまとめた）✅
+1. 疎通確認
+    1. calc-engine起動✅
+    1. server-calc-engine接続✅
+1. Julia計算部分作成
+1. FE: Reactの資産配分入力画面の作成
 1. 
 
 
@@ -71,6 +77,8 @@
 1. デバッガ: VSCodeの拡張？
 
 ### 学び
+#### インデント
+- スペース
 #### 型
 - Goは静的型付け言語なので、型安全である
 - 同時に型推論も走るため、型を指定しなくても推論で保管もされる
@@ -80,6 +88,13 @@
 - var: 変数宣言+型宣言（初期値が要らない場合は、こちらが推奨）
 - :=: 変数宣言+型推論+初期値の代入
 - JSは再代入の可否でconst, letを使い分け
+
+#### if文
+- ()不要
+- if文内で変数宣言ができる（変数宣言 ;（繋ぎのキーワード）条件　{操作}）
+- エラー処理
+    - JS: try/catch
+    - Go: resp, err := http.Get(url)とif err != nil
 
 
 ### 参考記事
@@ -104,7 +119,15 @@
 1. [YouTube / Julia導入](https://www.youtube.com/watch?v=vMWlppfkW08)
 1. [Webサイト / 簡単操作系](https://qiita.com/SatoshiTerasaki/items/a7646618cab8a4811d91?utm_source=chatgpt.com)
 1. [Webサイト / 株価シミュレーション](https://qiita.com/ismkt/items/210dee5cd6109e7c2ee9)
+1. [Webサイト / ボラシミュレーション](https://qiita.com/ismkt/items/027c0983c13abcc8b610)
 
 ## JS
 
 
+# プレゼンに向けて
+- 特徴
+- こういう使い方ができる
+- こういう使い方はできない
+- 特徴のアピールができるプレゼンになるといいかも
+    - 実際に使ってみてアピール
+    - アプリにする必要がない

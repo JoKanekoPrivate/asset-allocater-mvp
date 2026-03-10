@@ -3,24 +3,28 @@ package main
 import (
 	// JSONのエンコードとデコードを行うためのパッケージ
 	// JSON.stringify（json.Marshal）やJSON.parse（json.Unmarshal）のような役割
-  "encoding/json" 
+	"encoding/json"
 	// HTTPリクエストのボディを読み取るためのパッケージ
 	// io.ReadAllはres.text()のような役割
 	// io.
-  "io" 
-  "log" // console.logのような役割
+	"io"
+	"log"      // console.logのような役割
 	"net/http" // HTTPリクエストを送るためのパッケージ、fetchのような役割
-  "os" // process.envのprocessのような役割
+	"os"       // process.envのprocessのような役割
 
 	"github.com/gin-gonic/gin"
+	// 環境変数を読み込むためのパッケージ
+	// dotenvのような役割
 	"github.com/joho/godotenv"
 )
 
 func main() {
 	// .env.local 読み込み
-  if err := godotenv.Load(".env.local"); err != nil {
-    log.Println("No .env.local file found")
-  }
+	// godoenv.Loadは、nil（成功）またはerror（失敗）を返す
+	// if文内で、変数定義を
+	if err := godotenv.Load(".env.local"); err != nil {
+		log.Println("No .env.local file found")
+	}
 
 	router := gin.Default()
 
@@ -42,12 +46,12 @@ func main() {
 		// Goでは、複数の値を返す関数が一般的
 		resp, err := http.Get(juliaURL + "/test")
 		if err != nil {
-      c.JSON(500, gin.H{
-        "message": "Failed to connect to Julia",
-        "details": err.Error(),
-      })
-    	return
-    }
+			c.JSON(500, gin.H{
+				"message": "Failed to connect to Julia",
+				"details": err.Error(),
+			})
+			return
+		}
 
 		// Go特有な書き方
 		// HTTPリクエストが終わったら、resp.Bodyを閉じる
@@ -65,17 +69,24 @@ func main() {
 		// string: キーは文字列
 		// interface{}: 値は任意の型（JSONの値は、文字列、数値、配列、オブジェクトなど様々な型があるため）
 		var result map[string]interface{}
-		
+
 		// GoのJSONパースは、json.Unmarshalを使う
 		// json.Unmarshalは、第一引数にJSONデータ、第二引数にパース結果を格納する変数のポインタを渡す
 		json.Unmarshal(body, &result)
 
 		// レスポンス
 		c.JSON(200, gin.H{
-			"message": "Julia connection test is successed",
+			"message":       "Julia connection test is successed",
 			"juliaResponse": result,
 		})
 	})
 
-	router.Run(":8080")
+	// 環境変数からポート取得
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("Server starting on port %s", port)
+	router.Run(":" + port)
 }
