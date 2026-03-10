@@ -70,11 +70,26 @@
 1. IDE: VSCode
 1. デバッガ: VSCodeの拡張？
 
+### 学び
+#### 型
+- Goは静的型付け言語なので、型安全である
+- 同時に型推論も走るため、型を指定しなくても推論で保管もされる
+- メリット: PythonやJuliaのような動的片付け言語の間に、静的型付け言語を設けることで型安全性が担保される
+#### 変数
+- const: 変数宣言+初期値の代入（不偏）
+- var: 変数宣言+型宣言（初期値が要らない場合は、こちらが推奨）
+- :=: 変数宣言+型推論+初期値の代入
+- JSは再代入の可否でconst, letを使い分け
+
+
 ### 参考記事
 1. [Webサイト / HelloWorld](https://qiita.com/rapirapi/items/a1a770c044d72328a34e)
 1. Helloworld, 38-go-test
 1. [公式 / QuickStart](https://gin-gonic.com/en/docs/quickstart/?utm_source=chatgpt.com)
 1. [Webサイト / フレームワーク概要](https://geechs-job.com/tips/details/142)
+1. [Webサイト / 変数宣言（:= or var） ≒ const, let](https://qiita.com/Winesburg_Ohio/items/16ef144b48b241241ecd)
+1. [Webサイト / errorが例外ではなく、戻り値として返ってくる / http.Get ≒ fetch](https://jeremybytes.blogspot.com/2021/01/go-golang-multiple-return-values.html#:~:text=The%20final%20return%20statement%20returns,of%20the%20%22:=%22%20operator.)
+
 
 ## Julia
 日本語記事少ないわ、、、、

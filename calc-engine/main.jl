@@ -1,10 +1,15 @@
 using Oxygen
 using JSON3
+using DotEnv
+
+# 環境変数の読み込み
+DotEnv.config(".env.local")
 
 # ヘルスチェック
 @get "/test" function()
   return Dict(
-    "status" => "ok"
+    "status" => "ok",
+    "message" => "Julia server is running"
   )
 end
 
@@ -15,10 +20,15 @@ end
     
   # レスポンス
   return Dict(
+    "message" => "Calculation is completed",
     "expectedReturn" => 0.05,
     "risk" => 0.12
   )
 end
 
+# 環境変数から取得
+port = parse(Int, get(ENV, "PORT", "8081"))
+host = get(ENV, "HOST", "127.0.0.1")
+
 # サーバー起動
-serve(host="127.0.0.1", port=8081)
+serve(host=host, port=port)

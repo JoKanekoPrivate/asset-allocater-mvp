@@ -1,2 +1,5 @@
 # env
 .env.local
+
+# 言語関連
+temp/
