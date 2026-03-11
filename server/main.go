@@ -105,9 +105,6 @@ func main() {
 			return
 		}
 
-		// ⭐️デバッグ
-		log.Printf("✅ Request body received: %+v", requestBody)
-
 		// Juliaサーバーに送るリクエストボディの構築
 		juliaRequest := map[string]interface{}{
 			"weights":         requestBody["weights"],
@@ -126,9 +123,6 @@ func main() {
 			return
 		}
 
-		// ⭐️デバッグ
-		log.Printf("✅ JSON data to send to Julia: %s", string(jsonData))
-
 		// Juliaサーバーの/calc/evaluateエンドポイントにリクエスト
 		resp, err := http.Post(
 			juliaURL+"/calc/evaluate",
@@ -144,14 +138,11 @@ func main() {
 		}
 		defer resp.Body.Close()
 
-		// ⭐️デバッグ
-		log.Printf("✅ Received response from Julia with status code: %d", resp.StatusCode)
-
 		// レスポンスの読み取り
 		juliaResponseBody, _ := io.ReadAll(resp.Body)
 
 		// ⭐️デバッグ
-		log.Printf("✅ Response body from Julia: %s", string(juliaResponseBody))
+		log.Printf("********* %s", string(juliaResponseBody))
 
 		// JSONのパース結果を格納する変数
 		var juliaResult map[string]interface{}

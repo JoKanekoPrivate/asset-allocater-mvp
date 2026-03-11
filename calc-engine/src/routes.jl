@@ -46,17 +46,22 @@ end
     expected_returns = Float64.(body.expectedReturns)
     volatilities = Float64.(body.volatilities)
 
-    # 相関行列の構築
+    # 相関係数行列の構築
+    # ⭐️デモ用にclientから2次元配列として送っている
+    # ⭐️DBから取得、またはserverから送る形式にリファクタリング予定
     n = length(weights)
-    correlations = Matrix{Float64}(I, n, n)  # 単位行列から開始
-
-    if haskey(body, :correlations)
-      for corr in body.correlations
-        i = corr.index1 + 1  # Julia は 1-indexed
-        j = corr.index2 + 1
-        correlations[i, j] = corr.value
-        correlations[j, i] = corr.value  # 対称行列
+    correlations = Matrix{Float64}(undef, n, n)
+    
+    if haskey(body, :correlations) && body.correlations isa AbstractArray
+      # 2次元配列をMatrixに変換
+      for i in 1:n
+        for j in 1:n
+          correlations[i, j] = Float64(body.correlations[i][j])
+        end
       end
+    else
+      # デフォルトは単位行列（相関なし）
+      correlations = Matrix{Float64}(I, n, n)
     end
 
     # 計算実行

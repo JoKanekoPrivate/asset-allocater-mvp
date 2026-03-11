@@ -3,7 +3,7 @@
 # 技術構成
 - Client: JavaScript
     - React
-    - React Router(仮)
+    - React Router
     - Mantine（仮） 
 - Server: Go
     - [Gin](https://gin-gonic.com/en/docs/introduction/)
@@ -14,25 +14,26 @@
     - Oxygen.jl 
     - 
 - DB: PostgreSQL 
-    - **
+    - DBは省略
 - Infra: Render
-    - **
+    - デプロイは省略
 
 # ゴール関連
 ## ゴール
 ### FE: Reactで資産配分入力画面を作る（簡単で良い）
-    - 資産配分入力画面（入力）
-    - 合計比率の表示（state）
-    - 期待リターン表示（出力）
-    - リスク（出力）
+- 資産配分入力画面（入力）
+- 合計比率の表示（state）
+- calculationボタン
+- 期待リターン表示（出力）
+- リスク（出力）
 ### BE: Go, FiberでAPIを作る
-    - DBからパラメータを取得する
-    - calc-engineにパラメータと共にリクエストを送信（JSON） 
-    - calc-engineのレスポンスを受信（JSON） 
-    - FEに結果を適切な形で返す（JSON） 
+- DBからパラメータを取得する
+- calc-engineにパラメータと共にリクエストを送信（JSON） 
+- calc-engineのレスポンスを受信（JSON） 
+- FEに結果を適切な形で返す（JSON） 
 ### Calc-Engine: Juliaで計算エンジンを作る
-    - BEからのリクエストを受け取る（JSON） 
-    - BEにレスポンスを返す（JSON）
+- BEからのリクエストを受け取る（JSON） 
+- BEにレスポンスを返す（JSON）
 
 ## NiceToHave
 - chart形式
@@ -60,8 +61,11 @@
 ## Day3
 1. Calc: Routesの作成✅
 1. FE-BE-Calc: 接続確認(curlを用いて、localhot8080（go）からjuliaを呼び出す)✅
-1. FE: Reactの資産配分入力画面の作成
-1. 
+1. FE: ReactRouterによる画面遷移✅
+1. FE: Reactの資産配分入力画面の作成✅
+1. FE-BE-Calc: 仮で全てのパラメータをFEからreq.bodyとして送っているので、後ほどリファクタリングする⭐️
+
+1. 発表の筋を決める
 
 
 

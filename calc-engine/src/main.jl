@@ -1,6 +1,7 @@
 # Expressのレイヤードアーキテクチャではindex.js（main.js）に相当するファイル
 # サーバーの起動とルーティングの定義を行うファイル
 
+using Revise
 using Oxygen
 using JSON3
 using DotEnv
