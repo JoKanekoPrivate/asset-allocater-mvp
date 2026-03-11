@@ -58,8 +58,8 @@
 1. Calc: Julia計算部分作成✅
 
 ## Day3
-1. Calc: Routesの作成
-1. 
+1. Calc: Routesの作成✅
+1. FE-BE-Calc: 接続確認(curlを用いて、localhot8080（go）からjuliaを呼び出す)✅
 1. FE: Reactの資産配分入力画面の作成
 1. 
 
@@ -100,6 +100,10 @@
     - JS: try/catch
     - Go: resp, err := http.Get(url)とif err != nil
 
+#### エラー
+- コンパイル言語のため、ホットリロードが出来ず過去のコードが反映されていまう。
+- 回避策：毎回rm -rf tmp/でキャッシュをクリアしてから立ち上げる必要がある
+
 
 ### 参考記事
 1. [Webサイト / HelloWorld](https://qiita.com/rapirapi/items/a1a770c044d72328a34e)
@@ -135,6 +139,23 @@
 - エラー処理
     - JS: try/catch
     - Go: try/catch
+
+
+#### 関数
+- 
+
+#### エラー関連
+- JITコンパイル言語のため、ファイルを変更した後は、手動で再起動が必要
+- include()は初回ビルドでしか読み込まないため、毎回サーバーダウン・アップが必要
+
+
+### import/export
+- import側：使いたい関数のあるファイルをinclude（ファイルのパス）で指定
+- import側：そのファイル内で定義された関数はそのまま使用可能
+- export側: 通常通り関数を定義
+
+- JSの場合、import側: named exportまたはdefault exportで関数名を指定する必要あり
+- JSの場合、export側: exportキーワードが必要
 
 
 ### 参考記事

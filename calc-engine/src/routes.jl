@@ -65,12 +65,12 @@ end
     return Dict(
       "expectedReturn" => result.expectedReturn,
       "risk" => result.risk
-    ), 200
+    )
 
   catch e
     return Dict(
       "error" => "Calculation failed",
       "details" => string(e)
-    ), 400
+    )
   end
 end

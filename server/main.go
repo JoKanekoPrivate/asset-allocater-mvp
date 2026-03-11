@@ -12,6 +12,9 @@ import (
 	"net/http" // HTTPリクエストを送るためのパッケージ、fetchのような役割
 	"os"       // process.envのprocessのような役割
 
+	// bytes.NewReaderは、Goでバイト列をio.Readerに変換するための関数
+	"bytes"
+
 	"github.com/gin-gonic/gin"
 	// 環境変数を読み込むためのパッケージ
 	// dotenvのような役割
@@ -26,6 +29,10 @@ func main() {
 		log.Println("No .env.local file found")
 	}
 
+	// ⭐️デバッグ用に環境変数をログ出力
+	log.Printf("PORT: %s", os.Getenv("PORT"))
+	log.Printf("JULIA_BASE_URL: %s", os.Getenv("JULIA_BASE_URL"))
+
 	router := gin.Default()
 
 	// 起動テスト用エンドポイント
@@ -36,10 +43,10 @@ func main() {
 		})
 	})
 
-	// Jula接続テスト用エンドポイント
+	// Julia接続テスト用エンドポイント
 	router.GET("/api/test-julia", func(c *gin.Context) {
 		// 環境変数からJuliaサーバーのURLを取得（変数宣言+代入）
-		juliaURL := os.Getenv("JULIA_SERVER_URL")
+		juliaURL := os.Getenv("JULIA_BASE_URL")
 
 		// Juliaサーバーの/testエンドポイントにリクエスト（変数宣言+代入）
 		// http.Getは、responseとerrorの2つの値を返す
@@ -76,9 +83,82 @@ func main() {
 
 		// レスポンス
 		c.JSON(200, gin.H{
-			"message":       "Julia connection test is successed",
+			"message":       "Julia connection is successed",
 			"juliaResponse": result,
 		})
+	})
+
+	router.POST("/api/portfolio/evaluate", func(c *gin.Context) {
+
+		// 環境変数からJuliaサーバーのURLを取得
+		juliaURL := os.Getenv("JULIA_BASE_URL")
+
+		// クライアントからのリクエストボディを格納する変数
+		var requestBody map[string]interface{}
+
+		// クライアントからのリクエストボディの取得・読み取り
+		if err := c.BindJSON(&requestBody); err != nil {
+			c.JSON(400, gin.H{
+				"error":   "Invalid request body",
+				"details": err.Error(),
+			})
+			return
+		}
+
+		// ⭐️デバッグ
+		log.Printf("✅ Request body received: %+v", requestBody)
+
+		// Juliaサーバーに送るリクエストボディの構築
+		juliaRequest := map[string]interface{}{
+			"weights":         requestBody["weights"],
+			"expectedReturns": requestBody["expectedReturns"],
+			"volatilities":    requestBody["volatilities"],
+			"correlations":    requestBody["correlations"],
+		}
+
+		// JSONデータに変換
+		jsonData, err := json.Marshal(juliaRequest)
+		if err != nil {
+			c.JSON(500, gin.H{
+				"message": "Failed to marshal JSON",
+				"details": err.Error(),
+			})
+			return
+		}
+
+		// ⭐️デバッグ
+		log.Printf("✅ JSON data to send to Julia: %s", string(jsonData))
+
+		// Juliaサーバーの/calc/evaluateエンドポイントにリクエスト
+		resp, err := http.Post(
+			juliaURL+"/calc/evaluate",
+			"application/json",
+			bytes.NewBuffer(jsonData),
+		)
+		if err != nil {
+			c.JSON(500, gin.H{
+				"message": "Failed to connect to Julia",
+				"details": err.Error(),
+			})
+			return
+		}
+		defer resp.Body.Close()
+
+		// ⭐️デバッグ
+		log.Printf("✅ Received response from Julia with status code: %d", resp.StatusCode)
+
+		// レスポンスの読み取り
+		juliaResponseBody, _ := io.ReadAll(resp.Body)
+
+		// ⭐️デバッグ
+		log.Printf("✅ Response body from Julia: %s", string(juliaResponseBody))
+
+		// JSONのパース結果を格納する変数
+		var juliaResult map[string]interface{}
+		json.Unmarshal(juliaResponseBody, &juliaResult)
+
+		// クライアントへのレスポンス
+		c.JSON(200, juliaResult)
 	})
 
 	// 環境変数からポート取得
