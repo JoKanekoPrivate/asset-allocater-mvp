@@ -89,7 +89,6 @@ func main() {
 	})
 
 	router.POST("/api/portfolio/evaluate", func(c *gin.Context) {
-
 		// 環境変数からJuliaサーバーのURLを取得
 		juliaURL := os.Getenv("JULIA_BASE_URL")
 
@@ -141,15 +140,64 @@ func main() {
 		// レスポンスの読み取り
 		juliaResponseBody, _ := io.ReadAll(resp.Body)
 
-		// ⭐️デバッグ
-		log.Printf("********* %s", string(juliaResponseBody))
-
 		// JSONのパース結果を格納する変数
 		var juliaResult map[string]interface{}
 		json.Unmarshal(juliaResponseBody, &juliaResult)
 
 		// クライアントへのレスポンス
 		c.JSON(200, juliaResult)
+	})
+
+	router.POST("/api/portfolio/scenario-comparison", func(c *gin.Context) {
+		// 環境変数からJuliaサーバーのURLを取得
+		juliaURL := os.Getenv("JULIA_BASE_URL")
+
+		// リクエストボディ取得
+		var requestBody map[string]interface{}
+		c.BindJSON(&requestBody)
+
+		weights := requestBody["weights"]
+		scenarios := requestBody["scenarios"]
+		correlations := requestBody["correlations"]
+
+		// 各シナリオごとに Julia を呼び出す
+		results := []map[string]interface{}{}
+
+		for _, scenario := range scenarios.([]interface{}) {
+			scenarioMap := scenario.(map[string]interface{})
+
+			juliaRequest := map[string]interface{}{
+				"weights":         weights,
+				"expectedReturns": scenarioMap["expectedReturns"],
+				"volatilities":    scenarioMap["volatilities"],
+				"correlations":    correlations,
+			}
+
+			// Julia を呼び出し（既存の /calc/evaluate を使用）
+			jsonData, _ := json.Marshal(juliaRequest)
+			resp, _ := http.Post(
+				juliaURL+"/calc/evaluate",
+				"application/json",
+				bytes.NewBuffer(jsonData),
+			)
+			defer resp.Body.Close()
+
+			bodyBytes, _ := io.ReadAll(resp.Body)
+			var juliaResult map[string]interface{}
+			json.Unmarshal(bodyBytes, &juliaResult)
+
+			// シナリオ名を追加
+			result := map[string]interface{}{
+				"scenarioName":   scenarioMap["scenarioName"],
+				"expectedReturn": juliaResult["expectedReturn"],
+				"risk":           juliaResult["risk"],
+			}
+			results = append(results, result)
+		}
+
+		c.JSON(200, gin.H{
+			"results": results,
+		})
 	})
 
 	// 環境変数からポート取得
